@@ -36,12 +36,14 @@ int main(int argc, char *argv[])
     if (bind(sock, (struct sockaddr *)&address, sizeof(address)) < 0) 
     {
         printf("Bind Failed\n");
+        close(sock);
         return -1;
     }
 
     if (listen(sock, 3) < 0) 
     {
         printf("Listen Failed\n");
+        close(sock);
         return -1;
     }
 
@@ -51,6 +53,7 @@ int main(int argc, char *argv[])
         if ((new_sock = accept(sock, (struct sockaddr *)&address, &addrlen)) < 0) 
         {
             printf("Accept Failed\n");
+            close(new_sock);
             continue;
         }
 
@@ -58,6 +61,7 @@ int main(int argc, char *argv[])
         if (ret == -1)
         {
             printf("Failed to receive message\n");
+            close(new_sock);
             continue;
         }
         printf("Received: %s\n", buffer);
@@ -68,12 +72,12 @@ int main(int argc, char *argv[])
             if (ret == -1)
             {
                 printf("Failed to send message\n");
-                continue;
             }
             printf("Sent: %s\n", message);
-            close(new_sock);
         }
+        close(new_sock);
     }
 
+    close(sock);
     return 0;
 }
