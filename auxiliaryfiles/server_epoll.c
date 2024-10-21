@@ -8,8 +8,8 @@
 #include <sys/epoll.h>
 
 #define BUF_SIZE 1024
-#define MAX_EVENTS 10
-#define MAX_CLIENTS 10
+#define MAX_EVENTS 20
+#define MAX_CLIENTS 20
 
 int main(int argc, char *argv[])
 {
